@@ -14,17 +14,21 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Build and push blog-api
       run: |
+        cd blog-api
         docker build -t i222577/blog-api:latest -f Dockerfile.blog .
         docker push i222577/blog-api:latest
     - name: Build and push auth-service
       run: |
+        cd auth-service
         docker build -t i222577/auth-service:latest -f Dockerfile.auth .
         docker push i222577/auth-service:latest
     - name: Build and push analytics-service
       run: |
+        cd analytics-service
         docker build -t i222577/analytics-service:latest -f Dockerfile.analytics .
         docker push i222577/analytics-service:latest
     - name: Build and push apache-proxy
       run: |
+        cd apache-proxy
         docker build -t i222577/apache-proxy:latest -f Dockerfile.apache .
         docker push i222577/apache-proxy:latest
