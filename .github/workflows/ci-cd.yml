@@ -1,0 +1,30 @@
+name: CI/CD Pipeline
+on:
+    push:
+    branches: [ main ]
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Build and push blog-api
+      run: |
+        docker build -t i222577/blog-api:latest -f Dockerfile.blog .
+        docker push i222577/blog-api:latest
+    - name: Build and push auth-service
+      run: |
+        docker build -t i222577/auth-service:latest -f Dockerfile.auth .
+        docker push i222577/auth-service:latest
+    - name: Build and push analytics-service
+      run: |
+        docker build -t i222577/analytics-service:latest -f Dockerfile.analytics .
+        docker push i222577/analytics-service:latest
+    - name: Build and push apache-proxy
+      run: |
+        docker build -t i222577/apache-proxy:latest -f Dockerfile.apache .
+        docker push i222577/apache-proxy:latest
